@@ -1,9 +1,10 @@
 package com.example.pamiw.service;
 
 import com.example.pamiw.domain.Competitor;
-import com.example.pamiw.repository.CompetitorRepository;
+import com.example.pamiw.repository.CompetitorSpringDataRepository;
 import com.example.pamiw.web.dto.CompetitorFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,36 +12,40 @@ import java.util.List;
 @Service
 public class CompetitorService {
     @Autowired
-    private CompetitorRepository competitorRepository;
+    CompetitorSpringDataRepository repository;
 
     public int save(Competitor competitor){
         if(competitor==null) return -1;
-        return competitorRepository.save(competitor);
+        return repository.save(competitor).getId();
     }
 
     public void update(Competitor competitor){
         if(competitor ==null) return;
-        competitorRepository.save(competitor);
+        repository.save(competitor);
     }
 
     public void delete(int id){
-        competitorRepository.delete(id);
+        repository.deleteById(id);
     }
 
     public void delete(Competitor competitor){
         if(competitor==null) return;
-        competitorRepository.delete(competitor.getId());
+        repository.delete(competitor);
     }
 
     public Competitor get(int id){
-        return competitorRepository.get(id);
+        return repository.getById(id);
     }
 
     public List<Competitor> get(int perPage, int page){
-        return competitorRepository.getAll(perPage, page);
+        return repository.findAll(PageRequest.of(page, perPage)).getContent();
     }
 
     public List<Competitor> get(int perPage, int page, CompetitorFilter filter){
-        return competitorRepository.getAll(perPage, page, filter);
+        return List.of();
+    }
+
+    public List<Competitor> findByUsernameOrName(String text){
+        return repository.findAllByNameContainingOrSurnameContaining(text, text);
     }
 }

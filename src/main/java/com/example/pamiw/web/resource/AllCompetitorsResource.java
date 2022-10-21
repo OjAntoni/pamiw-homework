@@ -16,12 +16,23 @@ public class AllCompetitorsResource {
     @Autowired
     private CompetitorService competitorService;
 
-    @GetMapping
+    //@GetMapping
     ResponseEntity<?> getAll(@RequestParam int perPage,
                              @RequestParam int page,
                              @RequestBody(required = false) CompetitorFilter filter){
         if(filter!=null){
             return new ResponseEntity<>(competitorService.get(perPage, page, filter), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(competitorService.get(perPage, page), HttpStatus.OK);
+        }
+    }
+
+    @GetMapping
+    ResponseEntity<?> getAll(@RequestParam int perPage,
+                             @RequestParam int page,
+                             @RequestParam(required = false) String name){
+        if(name!=null){
+            return new ResponseEntity<>(competitorService.findByUsernameOrName(name), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(competitorService.get(perPage, page), HttpStatus.OK);
         }
