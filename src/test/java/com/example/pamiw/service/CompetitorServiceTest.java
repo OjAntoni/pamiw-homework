@@ -77,11 +77,31 @@ class CompetitorServiceTest {
     }
 
     @Test
-    void delete() {
+    void deleteByIdTest() {
+        Mockito.doNothing().when(mock).deleteById(1);
+        competitorService.delete(1);
+        Mockito.verify(mock, Mockito.times(1)).deleteById(1);
+    }
+    @Test
+    void deleteNullByIdTest() {
+        Mockito.doNothing().when(mock).deleteById(0);
+        competitorService.delete(0);
+        Mockito.verify(mock, Mockito.times(0)).deleteById(0);
     }
 
     @Test
-    void testDelete() {
+    void deleteCompetitorTest() {
+        Competitor competitor = new Competitor();
+        Mockito.doNothing().when(mock).delete(competitor);
+        competitorService.delete(competitor);
+        Mockito.verify(mock, Mockito.times(1)).delete(competitor);
+    }
+    @Test
+    void deleteNullCompetitorTest() {
+        Competitor competitor = null;
+        Mockito.doNothing().when(mock).delete(competitor);
+        competitorService.delete(competitor);
+        Mockito.verify(mock, Mockito.times(0)).delete(competitor);
     }
 
     @Test
