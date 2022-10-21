@@ -118,5 +118,6 @@ class CompetitorServiceTest {
 
     @Test
     void findByUsernameOrName() {
+
     }
 }
