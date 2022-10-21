@@ -92,7 +92,7 @@ class CompetitorServiceTest {
     void deleteNullByIdTest() {
         Mockito.doNothing().when(mock).deleteById(0);
         competitorService.delete(0);
-        Mockito.verify(mock, Mockito.times(0)).deleteById(0);
+        Mockito.verify(mock, Mockito.times(1)).deleteById(0);
     }
 
     @Test
@@ -108,10 +108,6 @@ class CompetitorServiceTest {
         Mockito.doNothing().when(mock).delete(competitor);
         competitorService.delete(competitor);
         Mockito.verify(mock, Mockito.times(0)).delete(competitor);
-    }
-
-    @Test
-    void get() {
     }
 
     @Test
@@ -138,7 +134,23 @@ class CompetitorServiceTest {
         List<Competitor> actual = competitorService.get(pageSize, pageNumber);
         assertEquals(actual, expected);
     }
-
+    @Test
+    void getByIdTest() {
+        Competitor competitor = Competitor.builder().id(1).height(190).build();
+        Mockito.when(mock.getById(1)).
+                thenReturn(competitor);
+        Competitor returned = competitorService.get(1);
+        Assertions.assertEquals(competitor,returned);
+        Mockito.verify(mock, Mockito.times(1)).getById(1);
+    }
+    @Test
+    void getNullCompetitorTest(){
+        Mockito.when(mock.getById(-1)).
+                thenReturn(null);
+        Competitor returned = competitorService.get(-1);
+        assertNull(returned);
+        Mockito.verify(mock, Mockito.times(1)).getById(-1);
+    }
     @Test
     void testGet1() {
     }
