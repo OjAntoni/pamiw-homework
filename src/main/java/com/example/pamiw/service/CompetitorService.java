@@ -3,6 +3,7 @@ package com.example.pamiw.service;
 import com.example.pamiw.domain.Competitor;
 import com.example.pamiw.repository.CompetitorRepository;
 import com.example.pamiw.web.dto.CompetitorFilter;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CompetitorService {
-    @Autowired
     CompetitorRepository repository;
 
     public int save(Competitor competitor){
