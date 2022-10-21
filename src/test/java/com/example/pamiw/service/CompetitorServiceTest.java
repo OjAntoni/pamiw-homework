@@ -10,6 +10,9 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CompetitorServiceTest {
 
@@ -54,7 +57,23 @@ class CompetitorServiceTest {
     }
 
     @Test
-    void update() {
+    void isUpdateCorrectly_ArgumentIsNotNull_Update() {
+        Competitor competitor = Competitor.builder().id(1).build();
+        Mockito.when(mock.save(ArgumentMatchers.notNull())).thenReturn(competitor);
+        for (int i = 1; i <= 10; i++) {
+            competitorService.update(competitor);
+        }
+        Mockito.verify(mock, Mockito.times(10)).save(competitor);
+    }
+
+    @Test
+    void isUpdateCorrectly_ArgumentIsNull_DoNothing() {
+        Competitor competitor = null;
+        for (int i = 1; i <= 10; i++) {
+            competitorService.update(competitor);
+        }
+        Mockito.verify(mock, Mockito.times(0)).save(competitor);
+
     }
 
     @Test

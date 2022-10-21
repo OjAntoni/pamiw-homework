@@ -20,7 +20,7 @@ public class CompetitorService {
     }
 
     public void update(Competitor competitor){
-        if(competitor ==null) return;
+        if(competitor == null) return;
         repository.save(competitor);
     }
 
