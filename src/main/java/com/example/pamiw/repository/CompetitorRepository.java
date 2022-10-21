@@ -1,16 +1,19 @@
 package com.example.pamiw.repository;
 
 import com.example.pamiw.domain.Competitor;
-import com.example.pamiw.web.dto.CompetitorFilter;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
-public interface CompetitorRepository {
-    int save(Competitor competitor);
-    void delete(int id);
-    List<Competitor> getAll();
-    List<Competitor> getAll(int perPage, int page);
-    List<Competitor> getAll(int perPage, int page, CompetitorFilter filter);
+@Repository
+public interface CompetitorRepository extends JpaRepository<Competitor, Integer> {
+    List<Competitor> findAllByCountryAndNameAndSurnameAndDateOfBirthBetweenAndHeightBetweenAndWeightBetween(
+            String country, String name, String surname, LocalDate from, LocalDate to, int hFrom, int hTo,
+            double wFrom, double wTo, Pageable pageable
+    );
 
-    Competitor get(int id);
+    List<Competitor> findAllByNameContainingOrSurnameContaining(String name, String surname);
 }

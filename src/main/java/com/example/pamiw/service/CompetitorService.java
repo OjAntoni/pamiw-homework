@@ -1,7 +1,7 @@
 package com.example.pamiw.service;
 
 import com.example.pamiw.domain.Competitor;
-import com.example.pamiw.repository.CompetitorSpringDataRepository;
+import com.example.pamiw.repository.CompetitorRepository;
 import com.example.pamiw.web.dto.CompetitorFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class CompetitorService {
     @Autowired
-    CompetitorSpringDataRepository repository;
+    CompetitorRepository repository;
 
     public int save(Competitor competitor){
         if(competitor==null) return -1;
