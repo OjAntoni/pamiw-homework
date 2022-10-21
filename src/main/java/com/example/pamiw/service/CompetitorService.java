@@ -4,7 +4,6 @@ import com.example.pamiw.domain.Competitor;
 import com.example.pamiw.repository.CompetitorRepository;
 import com.example.pamiw.web.dto.CompetitorFilter;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 

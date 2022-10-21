@@ -27,7 +27,7 @@ class CompetitorServiceTest {
     }
 
     @Test
-    void save() {
+    void saveCompetitorTest() {
         AtomicInteger index = new AtomicInteger();
         Mockito.when(mock.save(ArgumentMatchers.notNull())).
                 then(invocation ->
@@ -42,6 +42,15 @@ class CompetitorServiceTest {
         }
 
         Mockito.verify(mock, Mockito.times(10)).save(ArgumentMatchers.notNull());
+    }
+
+    @Test
+    void saveNullCompetitorTest() {
+        Competitor competitor = null;
+        int index = competitorService.save(competitor);
+
+        Mockito.verify(mock, Mockito.times(0)).save(ArgumentMatchers.isNull());
+        Assertions.assertEquals(-1, index);
     }
 
     @Test
