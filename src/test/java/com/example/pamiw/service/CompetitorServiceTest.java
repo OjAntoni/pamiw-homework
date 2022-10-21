@@ -8,7 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.time.LocalDate;
 
@@ -109,7 +115,28 @@ class CompetitorServiceTest {
     }
 
     @Test
-    void testGet() {
+    void isGetPageOfCompetitorCorrectly_ArgumentsArePositive_Return() {
+
+        List<Competitor> expected = new ArrayList<>();
+        int pageNumber = 1;
+        int pageSize = 5;
+        for (int i = 1; i <= 5; i++) {
+            expected.add(Competitor.builder().id(i).build());
+        }
+        Pageable pageRequest = PageRequest.of(pageNumber, pageSize);
+        PageImpl<Competitor> page = new PageImpl<>(expected, pageRequest, 5);
+        Mockito.when(mock.findAll(PageRequest.of(pageNumber, pageSize))).thenReturn(page);
+        List<Competitor> actual = competitorService.get(pageSize, pageNumber);
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    void isGetPageOfCompetitorCorrectly_ArgemunetsAreNegative_Return() {
+        List<Competitor> expected = new ArrayList<>();
+        int pageNumber = -1;
+        int pageSize = -5;
+        List<Competitor> actual = competitorService.get(pageSize, pageNumber);
+        assertEquals(actual, expected);
     }
 
     @Test

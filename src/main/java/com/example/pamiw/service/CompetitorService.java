@@ -38,6 +38,7 @@ public class CompetitorService {
     }
 
     public List<Competitor> get(int perPage, int page){
+        if (perPage < 0 || page < 0) return List.of();
         return repository.findAll(PageRequest.of(page, perPage)).getContent();
     }
 
