@@ -33,6 +33,7 @@ class CompetitorServiceTest {
 
     @AfterEach
     void tearDown() {
+        Mockito.reset(mock);
     }
 
     @Test
@@ -79,7 +80,6 @@ class CompetitorServiceTest {
             competitorService.update(competitor);
         }
         Mockito.verify(mock, Mockito.times(0)).save(competitor);
-
     }
 
     @Test
@@ -112,7 +112,6 @@ class CompetitorServiceTest {
 
     @Test
     void isGetPageOfCompetitorCorrectly_ArgumentsArePositive_Return() {
-
         List<Competitor> expected = new ArrayList<>();
         int pageNumber = 1;
         int pageSize = 5;
@@ -127,7 +126,7 @@ class CompetitorServiceTest {
     }
 
     @Test
-    void isGetPageOfCompetitorCorrectly_ArgemunetsAreNegative_Return() {
+    void isGetPageOfCompetitorCorrectly_ArgumentsAreNegative_Return() {
         List<Competitor> expected = new ArrayList<>();
         int pageNumber = -1;
         int pageSize = -5;
@@ -152,11 +151,12 @@ class CompetitorServiceTest {
         Mockito.verify(mock, Mockito.times(1)).getById(-1);
     }
     @Test
-    void testGet1() {
+    void findByUsernameOrNameTest() {
+        Mockito.when(mock.findAllByNameContainingOrSurnameContaining(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.anyString()))
+                .thenReturn(List.of());
+        assertNotNull(competitorService.findByUsernameOrName("test"));
     }
 
-    @Test
-    void findByUsernameOrName() {
-        //
-    }
 }

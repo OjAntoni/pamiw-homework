@@ -42,7 +42,7 @@ public class CompetitorService {
         return repository.findAll(PageRequest.of(page, perPage)).getContent();
     }
 
-    public List<Competitor> findByUsernameOrName(String text){
-        return repository.findAllByNameContainingOrSurnameContaining(text, text);
+    public List<Competitor> findByUsernameOrName(String usernameOrName){
+        return repository.findAllByNameContainingOrSurnameContaining(usernameOrName, usernameOrName);
     }
 }
